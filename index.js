@@ -17,8 +17,8 @@ async function run() {
         const octokit = github.getOctokit(inputs.token);
 
         // Get the JSON webhook payload for the event that triggered the workflow
-        const payload = JSON.stringify(github.context.payload, undefined, 2)
-        console.log(`The event payload: ${payload}`);
+        // const payload = JSON.stringify(github.context.payload, undefined, 2)
+        // console.log(`The event payload: ${payload}`);
 
         // Check if the action is triggered by a pull request
         const pr = github.context.payload.pull_request;
@@ -34,7 +34,7 @@ async function run() {
             repo,
             issue_number: pr.number,
         });
-        console.log(`Comments: ${JSON.stringify(comments)}`);
+        console.log(`Comments: ${JSON.stringify(comments, undefined, 2)}`);
 
         // return empty for now
         core.setOutput('parameters', '');

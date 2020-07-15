@@ -2,7 +2,7 @@ name: 'Pull Request Comment Parameters'
 description: 'Find parameters in pull request comments'
 inputs:
   token:
-    description: 'Token to access the pull request. Normally using ${{secrets.GITHBU_TOKEN}} would be enough.'
+    description: 'Token to access the pull request'
     required: true
   trigger:
     description: 'A comment that starts with the trigger word is considered as parameters'
