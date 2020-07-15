@@ -1,0 +1,17 @@
+on:
+  pull_request
+
+jobs:
+  simple_test:
+    runs-on: ubuntu
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        uses: ./
+        id: get_parameters
+        with:
+          trigger: 'simple_test'
+          default_parameters: 'Foo=1,Bar=2,'
+      - name: Echo result
+        run: echo 'Output is ${{ steps.get_parameters.outputs.parameters }}'
