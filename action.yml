@@ -8,4 +8,4 @@ inputs:
     description: 'Default environment variables if they are not provided in the comment'
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'dist/index.js'
