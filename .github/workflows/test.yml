@@ -15,4 +15,6 @@ jobs:
           trigger: 'simple_test'
           default_parameters: 'Foo=1,Bar=2,'
       - name: Print Env Var
-        run: echo 'Env is Foo=${Foo}, Bar=${Bar}'
+        run: |
+          echo 'Env is Foo=$Foo, Bar=$Bar'
+          printenv

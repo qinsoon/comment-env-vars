@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const parseBody = require('./utils').parseBody;
+const { parseBody, mergeObjects } = require('./utils');
 
 async function run() {
     try {
@@ -31,17 +31,18 @@ async function run() {
         // get all comments
         const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
         console.log(`Repo: ${owner}/${repo}`);
-        const comments = await octokit.issues.listComments({
+        const comments = (await octokit.issues.listComments({
             owner, 
             repo,
             issue_number: pr.number,
-        }).data;
+        })).data;
         console.log(`Comments: ${JSON.stringify(comments, undefined, 2)}`);
 
         // get params from comments
         const allowed_roles = ['COLLABORATOR', 'MEMBER', 'OWNER'];
         let comment_params;
-        for (const comment in comments) {
+        for (let i = 0; i < comments.length; i++) {
+            const comment = comments[i];
             const body = comment.body.trim();
             if (body.startsWith(inputs.trigger) 
                 && allowed_roles.find(x => x == comment.author_association)) {
