@@ -1,0 +1,18 @@
+on:
+  pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run action
+        uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          default_env: 'FOO=1, BAR=2'
+      - name: Print env var
+        run: |
+          printenv FOO
+          printenv BAR
