@@ -4,6 +4,8 @@ inputs:
   token:
     description: 'Token to access the pull request'
     required: true
+  debug:
+    description: 'Print debug info'
   default_env:
     description: 'Default environment variables if they are not provided in the comment'
 runs:
