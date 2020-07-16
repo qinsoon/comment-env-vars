@@ -30,7 +30,7 @@ on:
   pull_request
 
 jobs:
-  extract-env-var:
+  extract-env-vars:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

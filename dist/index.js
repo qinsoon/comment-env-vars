@@ -4504,11 +4504,15 @@ async function run() {
         const inputs = {
             token: core.getInput('token'),
             default_parameters: core.getInput('default_env'),
+            debug: core.getInput('debug')
         };
+        console.log(`debug = ${core.getInput('debug')}`)
         const job_name = github.context.job;
+        const debug = inputs.debug === 'true'
 
-        console.log(`Looking for comments for job: ${job_name}`);
-        console.log(`With default parameters: ${inputs.default_parameters}`);
+        if (debug) {
+            console.log(`Looking for comments for job '${job_name}' with default envs '${inputs.default_parameters}'`);
+        }
 
         // create a client
         const octokit = github.getOctokit(inputs.token);
@@ -4526,12 +4530,19 @@ async function run() {
             repo,
             issue_number: pr.number,
         })).data;
+        if (debug) {
+            console.log(`Fetched ${comments.length} comments from ${owner}/${repo}'s PR #${pr.number}`);
+        }
 
         // get params from comments
         const allowed_roles = ['COLLABORATOR', 'MEMBER', 'OWNER'];
         let comment_params;
         for (let i = 0; i < comments.length; i++) {
             const comment = comments[i];
+            if (debug) {
+                console.log(`Check comment${i}: ${JSON.stringify(comment, undefined, 2)}`);
+            }
+
             const body = comment.body.trim();
             if (body.startsWith(job_name)
                 && allowed_roles.find(x => x == comment.author_association)) {
