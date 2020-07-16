@@ -19,11 +19,8 @@ function parseBody(body, prefix) {
     }
 
     const keyValues = body.split(/[\n\r,]/);
-    console.log(keyValues)
     keyValues.forEach((str) => {
-        console.log(str)
         const split = str.split('=');
-        console.log(split)
         if (split.length == 2) {
             const key = split[0].trim();
             const value = split[1].trim();

@@ -14,7 +14,6 @@ async function run() {
 
         console.log(`Looking for comments for job: ${job_name}`);
         console.log(`With default parameters: ${inputs.default_parameters}`);
-        console.log(JSON.stringify(github.context.job, undefined, 2));
 
         // create a client
         const octokit = github.getOctokit(inputs.token);
@@ -27,13 +26,11 @@ async function run() {
 
         // get all comments
         const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-        console.log(`Repo: ${owner}/${repo}`);
         const comments = (await octokit.issues.listComments({
             owner, 
             repo,
             issue_number: pr.number,
         })).data;
-        console.log(`Comments: ${JSON.stringify(comments, undefined, 2)}`);
 
         // get params from comments
         const allowed_roles = ['COLLABORATOR', 'MEMBER', 'OWNER'];
