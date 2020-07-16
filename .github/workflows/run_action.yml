@@ -10,6 +10,7 @@ jobs:
       - name: Run action
         uses: ./
         with:
+          tokeN: ${{ secrets.GITHUB_TOKEN }}
           trigger: test
           default_env: 'FOO=1, BAR=2'
       - name: Print env var
