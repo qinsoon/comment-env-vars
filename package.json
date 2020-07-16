@@ -1,6 +1,6 @@
 {
-  "name": "pr-comment-parameters",
-  "version": "1.0.0",
+  "name": "comment-env-vars",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,6 @@
     "@actions/github": "4.0.0"
   },
   "devDependencies": {
-    "jest": "^26.1.0"
+    "jest": "26.1.0"
   }
 }

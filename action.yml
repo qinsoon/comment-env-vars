@@ -1,5 +1,5 @@
-name: 'Pull Request Comment Parameters'
-description: 'Find parameters in pull request comments'
+name: 'Pull Request Comment Environment Variables'
+description: 'Set environment variables depending on pull request comments'
 inputs:
   token:
     description: 'Token to access the pull request'
@@ -7,8 +7,8 @@ inputs:
   trigger:
     description: 'A comment that starts with the trigger word is considered as parameters'
     required: true
-  default_parameters:
-    description: 'Default parameters if they are not provided in the comment'
+  default_env:
+    description: 'Default environment variables if they are not provided in the comment'
 runs:
   using: 'node12'
   main: 'index.js'

@@ -9,7 +9,7 @@ async function run() {
         const inputs = {
             token: core.getInput('token'),
             trigger: core.getInput('trigger'),
-            default_parameters: core.getInput('default_parameters'),
+            default_parameters: core.getInput('default_env'),
         };
 
         console.log(`Looking for trigger word: ${inputs.trigger}`);
