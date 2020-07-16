@@ -45,7 +45,7 @@ async function run() {
         for (let i = 0; i < comments.length; i++) {
             const comment = comments[i];
             if (debug) {
-                console.log(`Check comment${i}: ${JSON.stringify(comment.body, undefined, 2)}`);
+                console.log(`Check comment${i}: ${JSON.stringify(comment, undefined, 2)}`);
             }
 
             const body = comment.body.trim();
