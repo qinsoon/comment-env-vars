@@ -1,7 +1,7 @@
 // Expect a body of key-value pairs, such as Foo=a, 
 // separated by line breaks and comma(,)
-// If trigger is not null, we expect the body to start with the trigger word, otherwise return an empty object.
-function parseBody(body, trigger) {
+// If prefix is not null, we expect the body to start with the prefix word, otherwise return an empty object.
+function parseBody(body, prefix) {
     // Return as an object/dict
     const ret = {};
 
@@ -10,12 +10,12 @@ function parseBody(body, trigger) {
     }
     
     // Remove trigger from the start of the body
-    if (trigger) {
-        if (!body.startsWith(trigger)) {
-            console.error('Only a string that starts with the trigger word can be parsed.');
+    if (prefix) {
+        if (!body.startsWith(prefix)) {
+            console.error('Only a string that starts with the prefix word can be parsed.');
             return ret;
         }
-        body = body.substring(trigger.length);
+        body = body.substring(prefix.length);
     }
 
     const keyValues = body.split(/[\n\r,]/);

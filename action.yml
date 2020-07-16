@@ -4,9 +4,6 @@ inputs:
   token:
     description: 'Token to access the pull request'
     required: true
-  trigger:
-    description: 'A comment that starts with the trigger word is considered as parameters'
-    required: true
   default_env:
     description: 'Default environment variables if they are not provided in the comment'
 runs:

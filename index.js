@@ -8,20 +8,16 @@ async function run() {
         // inputs
         const inputs = {
             token: core.getInput('token'),
-            trigger: core.getInput('trigger'),
             default_parameters: core.getInput('default_env'),
         };
+        const job_name = github.context.job;
 
-        console.log(`Looking for trigger word: ${inputs.trigger}`);
+        console.log(`Looking for comments for job: ${job_name}`);
         console.log(`With default parameters: ${inputs.default_parameters}`);
         console.log(JSON.stringify(github.context.job, undefined, 2));
 
         // create a client
         const octokit = github.getOctokit(inputs.token);
-
-        // Get the JSON webhook payload for the event that triggered the workflow
-        // const payload = JSON.stringify(github.context.payload, undefined, 2)
-        // console.log(`The event payload: ${payload}`);
 
         // Check if the action is triggered by a pull request
         const pr = github.context.payload.pull_request;
@@ -45,7 +41,7 @@ async function run() {
         for (let i = 0; i < comments.length; i++) {
             const comment = comments[i];
             const body = comment.body.trim();
-            if (body.startsWith(inputs.trigger) 
+            if (body.startsWith(job_name)
                 && allowed_roles.find(x => x == comment.author_association)) {
                 comment_params = parseBody(body);
                 // only take the first comment that matches
