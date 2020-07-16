@@ -14,8 +14,7 @@ async function run() {
 
         console.log(`Looking for trigger word: ${inputs.trigger}`);
         console.log(`With default parameters: ${inputs.default_parameters}`);
-        console.log(`Payload: `);
-        console.log(JSON.stringify(github.context.payload, undefined, 2));
+        console.log(JSON.stringify(github.context.job, undefined, 2));
 
         // create a client
         const octokit = github.getOctokit(inputs.token);
