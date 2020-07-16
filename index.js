@@ -9,10 +9,11 @@ async function run() {
         const inputs = {
             token: core.getInput('token'),
             default_parameters: core.getInput('default_env'),
-            debug: core.getInput('debug') === 'true'
+            debug: core.getInput('debug')
         };
         console.log(`debug = ${core.getInput('debug')}`)
         const job_name = github.context.job;
+        const debug = inputs.debug === 'true'
 
         if (debug) {
             console.log(`Looking for comments for job '${job_name}' with default envs '${inputs.default_parameters}'`);
