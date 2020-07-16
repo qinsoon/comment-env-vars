@@ -2,7 +2,7 @@ on:
   pull_request
 
 jobs:
-  no-comment-test:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
