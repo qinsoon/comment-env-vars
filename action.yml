@@ -9,11 +9,6 @@ inputs:
     required: true
   default_parameters:
     description: 'Default parameters if they are not provided in the comment'
-outputs:
-  parameters:
-    description: 'Parameters extracted from the comment. 
-    If a parameter is not provided in the comment, but provided with default_parameters, they show up here as well. 
-    Output is a string such as Foo=a,Bar=b,. This can be further parsed in shell with `grep -Po "(?<=Foo\=).*?(?=,)"`'
 runs:
   using: 'node12'
   main: 'index.js'

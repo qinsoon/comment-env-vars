@@ -14,5 +14,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           trigger: 'simple_test'
           default_parameters: 'Foo=1,Bar=2,'
-      - name: Echo result
-        run: echo 'Output is ${{ steps.get_parameters.outputs.parameters }}'
+      - name: Print Env Var
+        run: echo 'Env is Foo=${Foo}, Bar=${Bar}'

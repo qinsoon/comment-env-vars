@@ -1,6 +1,8 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+const parseBody = require('./utils').parseBody;
+
 async function run() {
     try {
         // inputs
@@ -33,13 +35,38 @@ async function run() {
             owner, 
             repo,
             issue_number: pr.number,
-        });
+        }).data;
         console.log(`Comments: ${JSON.stringify(comments, undefined, 2)}`);
 
-        // return empty for now
-        core.setOutput('parameters', '');
+        // get params from comments
+        const allowed_roles = ['COLLABORATOR', 'MEMBER', 'OWNER'];
+        let comment_params;
+        for (const comment in comments) {
+            const body = comment.body.trim();
+            if (body.startsWith(inputs.trigger) 
+                && allowed_roles.find(x => x == comment.author_association)) {
+                comment_params = parseBody(body);
+                // only take the first comment that matches
+                break;
+            }
+        }
+
+        // get default parameters
+        const default_params = parseBody(inputs.default_parameters);
+
+        // merge parameters
+        const final_params = mergeObjects(default_params, comment_params);
+        
+        console.log(`Default parameters: ${JSON.stringify(default_params, undefined, 2)}`);
+        console.log(`Comment parameters: ${JSON.stringify(comment_params, undefined, 2)}`);
+        console.log(`Final: ${JSON.stringify(final_params, undefined, 2)}`);
+
+        // export each parameters as variable
+        Object.keys(final_params).forEach((key) => {
+            core.exportVariable(key, final_params[key]);
+        });
     } catch (error) {
-    core.setFailed(error.message);
+        core.setFailed(error.message);
     }
 }
 
