@@ -2869,6 +2869,8 @@ const github = __webpack_require__(148);
 
 const { parseBody, mergeObjects } = __webpack_require__(323);
 
+// Build for distribution: ncc build index.js
+
 async function run() {
     try {
         // inputs
@@ -2896,20 +2898,42 @@ async function run() {
 
         // get all comments
         const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-        const comments = (await octokit.issues.listComments({
-            owner, 
-            repo,
-            issue_number: pr.number,
-        })).data;
-        if (debug) {
-            console.log(`Fetched ${comments.length} comments from ${owner}/${repo}'s PR #${pr.number}`);
+
+        const all_comments = [];
+        const PER_PAGE = 30;
+        let page = 0;
+
+        try {
+            while (true) {
+                // Fetch a page
+                const comments = (await octokit.issues.listComments({
+                    owner, 
+                    repo,
+                    issue_number: pr.number,
+                    per_page: PER_PAGE,
+                    page,
+                })).data;
+                if (debug) {
+                    console.log(`Fetched ${comments.length} comments from ${owner}/${repo}'s PR #${pr.number}`);
+                }
+                // Push all to the comments
+                all_comments.push(...comments);
+                // Check if there are more pages
+                if (comments.length == PER_PAGE) {
+                    page += 1;
+                } else {
+                    break;
+                }
+            }
+        } catch (error) {
+            console.log(`Failed to pull more comments: ${error}`);
         }
 
         // get params from comments
         const allowed_roles = ['COLLABORATOR', 'MEMBER', 'OWNER', 'CONTRIBUTOR'];
         let comment_params;
-        for (let i = 0; i < comments.length; i++) {
-            const comment = comments[i];
+        for (let i = 0; i < all_comments.length; i++) {
+            const comment = all_comments[i];
             if (debug) {
                 console.log(`Check comment${i}: ${JSON.stringify(comment, undefined, 2)}`);
             }
