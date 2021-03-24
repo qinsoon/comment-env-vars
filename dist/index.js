@@ -2901,7 +2901,7 @@ async function run() {
 
         const all_comments = [];
         const PER_PAGE = 30;
-        let page = 0;
+        let page = 1;
 
         try {
             while (true) {
