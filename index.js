@@ -32,10 +32,10 @@ async function run() {
             if (debug) {
                 console.log(`Use pull request for ${inputs.pull_request} from input`);
             }
-            pr = await octokit.pulls.get({
+            pr = (await octokit.pulls.get({
                 owner, repo,
                 pull_number: inputs.pull_request,
-            });
+            })).data;
         } else if (github.context.payload.pull_request) {
             if (debug) {
                 console.log(`Use pull request from the current PR`);
