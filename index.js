@@ -41,6 +41,9 @@ async function run() {
             // Fail if we cannot resolve to any pull request
             core.setFailed('This aciton should take a pull_request input or be triggered by a pull request. We cannot resolve to a pull request.');
         }
+        if (debug) {
+            console.log(`Get env vars from pull request ${pr.number}`);
+        }
 
         // get all comments
         const all_comments = [];
