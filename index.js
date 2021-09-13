@@ -10,6 +10,7 @@ async function run() {
         // inputs
         const inputs = {
             token: core.getInput('token'),
+            pull_request: core.getInput('pull_request'),
             default_parameters: core.getInput('default_env'),
             debug: core.getInput('debug')
         };
@@ -23,16 +24,35 @@ async function run() {
 
         // create a client
         const octokit = github.getOctokit(inputs.token);
+        const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
-        // Check if the action is triggered by a pull request
-        const pr = github.context.payload.pull_request;
+        // Check if we pass in pull request ID for the action.
+        let pr = null;
+        if (inputs.pull_request) {
+            if (debug) {
+                console.log(`Use pull request for ${inputs.pull_request} from input`);
+            }
+            pr = (await octokit.pulls.get({
+                owner, repo,
+                pull_number: inputs.pull_request,
+            })).data;
+        } else if (github.context.payload.pull_request) {
+            if (debug) {
+                console.log(`Use pull request from the current PR`);
+            }
+            pr = github.context.payload.pull_request;
+        }
+
         if (!pr) {
-            core.setFailed('This aciton should be triggered by a pull request. github.context.payload.pull_request does not exist.');
+            // Fail if we cannot resolve to any pull request
+            core.setFailed('This aciton should take a pull_request input or be triggered by a pull request. We cannot resolve to a pull request.');
+        }
+        if (debug) {
+            console.log(`Get env vars from pull request ${pr.number}`);
+            console.log(`${JSON.stringify(pr)}`);
         }
 
         // get all comments
-        const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-
         const all_comments = [];
         const PER_PAGE = 30;
         let page = 1;
