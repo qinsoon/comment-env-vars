@@ -43,7 +43,6 @@ async function run() {
         }
 
         // get all comments
-
         const all_comments = [];
         const PER_PAGE = 30;
         let page = 1;
