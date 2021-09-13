@@ -4,6 +4,8 @@ inputs:
   token:
     description: 'Token to access the pull request'
     required: true
+  pull_request:
+    description: 'The ID for the pull request'
   debug:
     description: 'Print debug info'
   default_env:

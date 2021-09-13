@@ -17,6 +17,11 @@ Inputs
 
 **Required** The GitHub token to access the repo, such as `${{ secrets.GITHUB_TOKEN }}`.
 
+`pull_request`
+The pull request number to fetch comments from. If this is specified, the action will use this pull request number. Otherwise,
+it will use the pull request which triggers the PR. If `pull_request` is not specified, and the action is not triggered from a
+pull request, the action will fail.
+
 `default_env`
 
 The default environment variables, such as `FOO=a, Bar=b`. Comma-separated key-value pairs. If we do not find those environment variables in the comment,
