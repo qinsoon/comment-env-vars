@@ -2,7 +2,7 @@ on:
   pull_request
 
 jobs:
-  test:
+  get-env-var-from-test-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
