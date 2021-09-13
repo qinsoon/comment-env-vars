@@ -29,11 +29,17 @@ async function run() {
         // Check if we pass in pull request ID for the action.
         let pr = null;
         if (inputs.pull_request) {
+            if (debug) {
+                console.log(`Use pull request for ${inputs.pull_request} from input`);
+            }
             pr = await octokit.pulls.get({
                 owner, repo,
                 pull_number: inputs.pull_request,
             });
         } else if (github.context.payload.pull_request) {
+            if (debug) {
+                console.log(`Use pull request from the current PR`);
+            }
             pr = github.context.payload.pull_request;
         }
 
@@ -43,6 +49,7 @@ async function run() {
         }
         if (debug) {
             console.log(`Get env vars from pull request ${pr.number}`);
+            console.log(`${JSON.stringify(pr)}`);
         }
 
         // get all comments
