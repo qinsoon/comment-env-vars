@@ -1,7 +1,7 @@
 // Expect a body of key-value pairs, such as Foo=a, 
 // separated by line breaks and comma(,)
 // If prefix is not null, we expect the body to start with the prefix word, otherwise return an empty object.
-function parseBody(body, prefix) {
+export function parseBody(body, prefix) {
     // Return as an object/dict
     const ret = {};
 
@@ -31,11 +31,6 @@ function parseBody(body, prefix) {
 }
 
 // Merge two objects. 
-function mergeObjects(default_, overwrite) {
+export function mergeObjects(default_, overwrite) {
     return Object.assign({}, default_, overwrite);
 }
-
-module.exports = {
-    parseBody,
-    mergeObjects,
-};
