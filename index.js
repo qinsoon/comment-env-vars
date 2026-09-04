@@ -84,7 +84,7 @@ async function run() {
         }
 
         // get params from comments
-        const allowed_roles = ['COLLABORATOR', 'MEMBER', 'OWNER', 'CONTRIBUTOR'];
+        const allowed_roles = ['COLLABORATOR', 'MEMBER', 'OWNER'];
         let comment_params;
         for (let i = 0; i < all_comments.length; i++) {
             const comment = all_comments[i];
