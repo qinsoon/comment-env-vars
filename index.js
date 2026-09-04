@@ -1,7 +1,7 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+import * as core from '@actions/core';
+import * as github from '@actions/github';
 
-const { parseBody, mergeObjects } = require('./utils');
+import { parseBody, mergeObjects } from './utils.js';
 
 // Build for distribution: ncc build index.js
 
@@ -32,7 +32,7 @@ async function run() {
             if (debug) {
                 console.log(`Use pull request for ${inputs.pull_request} from input`);
             }
-            pr = (await octokit.pulls.get({
+            pr = (await octokit.rest.pulls.get({
                 owner, repo,
                 pull_number: inputs.pull_request,
             })).data;
@@ -60,7 +60,7 @@ async function run() {
         try {
             while (true) {
                 // Fetch a page
-                const comments = (await octokit.issues.listComments({
+                const comments = (await octokit.rest.issues.listComments({
                     owner, 
                     repo,
                     issue_number: pr.number,

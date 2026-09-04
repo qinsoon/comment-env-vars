@@ -1,5 +1,4 @@
-const parseBody = require('./utils').parseBody;
-const mergeObjects = require('./utils').mergeObjects;
+import { parseBody, mergeObjects } from './utils.js';
 
 describe("parseBody", () => {
     test('parse', () => {
